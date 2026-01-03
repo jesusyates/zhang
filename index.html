@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mrs.Andi</title>
+    <meta name="description" content="Welcome to my personal page">
+    <style>
+        /* 基础样式重置 - 移动端优化 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent; /* 移除移动端点击高亮 */
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        /* 容器样式 - 移动端适配 */
+        .container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            padding: 0 15px;
+        }
+        
+        /* 圆形图片容器 - 使用viewport单位适配 */
+        .image-container {
+            position: relative;
+            width: 80vw; /* 使用视口宽度单位 */
+            height: 80vw; /* 保持宽高相等形成圆形 */
+            max-width: 400px; /* 最大尺寸限制 */
+            max-height: 400px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            background-color: #1a1a1a; /* 图片加载前的背景色 */
+        }
+        
+        /* 圆形图片 - 填充容器 */
+        .main-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 确保图片填满圆形区域 */
+            display: block;
+        }
+        
+        /* 标题样式 - 移动端适配 */
+        .title {
+            font-size: clamp(28px, 8vw, 42px); /* 使用clamp实现响应式字体 */
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* 副标题样式 */
+        .subtitle {
+            font-size: clamp(16px, 4.5vw, 20px);
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            padding: 0 10px;
+            line-height: 1.5;
+            font-weight: 300;
+        }
+        
+        /* 链接按钮容器 */
+        .links {
+            width: 100%;
+            max-width: 350px;
+            margin: 0 auto 40px;
+        }
+        
+        /* 链接按钮样式 - 移动端友好 */
+        .link-button {
+            display: block;
+            width: 100%;
+            padding: 18px 25px;
+            background-color: white;
+            color: #000000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: clamp(16px, 4.5vw, 18px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            -webkit-appearance: none; /* 移除iOS默认样式 */
+            appearance: none;
+        }
+        
+        /* 移动端触摸优化 */
+        .link-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .link-button:hover {
+            background-color: #f0f0f0;
+        }
+        
+        /* 页脚样式 */
+        .footer {
+            margin-top: 30px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: clamp(14px, 3.5vw, 16px);
+            padding: 15px;
+            text-align: center;
+        }
+        
+        /* 背景样式 */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            z-index: -1;
+        }
+        
+        /* 移动端特定优化 */
+        @media (hover: hover) and (pointer: fine) {
+            /* 仅在有悬停功能的设备上应用悬停效果 */
+            .link-button:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            }
+            
+            .link-button:active {
+                transform: translateY(-1px);
+            }
+        }
+        
+        /* 小屏幕手机优化 */
+        @media (max-width: 320px) {
+            .image-container {
+                width: 85vw;
+                height: 85vw;
+                max-width: 280px;
+                max-height: 280px;
+                border-width: 3px;
+            }
+            
+            .subtitle {
+                margin-bottom: 30px;
+            }
+            
+            .link-button {
+                padding: 16px 20px;
+            }
+        }
+        
+        /* 平板和较大手机 */
+        @media (min-width: 768px) {
+            .image-container {
+                width: 70vw;
+                height: 70vw;
+                max-width: 450px;
+                max-height: 450px;
+                border-width: 6px;
+                margin-bottom: 40px;
+            }
+            
+            .title {
+                margin-bottom: 20px;
+            }
+            
+            .subtitle {
+                margin-bottom: 50px;
+                max-width: 600px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .links {
+                max-width: 400px;
+            }
+            
+            .link-button {
+                padding: 20px 30px;
+            }
+        }
+        
+        /* 横屏模式优化 */
+        @media (orientation: landscape) and (max-height: 600px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: center;
+                gap: 30px;
+            }
+            
+            .image-container {
+                width: 40vh;
+                height: 40vh;
+                max-width: 250px;
+                max-height: 250px;
+                margin-bottom: 0;
+                flex-shrink: 0;
+            }
+            
+            .content {
+                flex: 1;
+                min-width: 250px;
+                max-width: 400px;
+                text-align: left;
+            }
+            
+            .title, .subtitle {
+                text-align: left;
+                padding-left: 0;
+            }
+            
+            .subtitle {
+                margin-bottom: 30px;
+            }
+            
+            .links {
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
+        
+        /* 防止文字选择（移动端优化） */
+        .title, .subtitle, .footer {
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        
+        /* 图片加载动画 */
+        .image-container {
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景 -->
+    <div class="background"></div>
+    
+    <!-- 主要内容 -->
+    <div class="container">
+        <!-- 圆形图片容器 -->
+        <div class="image-container">
+            <img src="images/1.jpg" alt="Mrs.Andi's profile" class="main-image" loading="lazy">
+        </div>
+        
+        <!-- 内容区域 -->
+        <div class="content">
+            <!-- 标题和描述 -->
+            <h1 class="title">Mrs.Andi</h1>
+            <p class="subtitle">I update my status daily; feel free to check it out if you like.</p>
+            
+            <!-- 链接按钮 -->
+            <div class="links">
+                <a href="https://g83u.site/l/Uwhu4PNp" class="link-button" target="_blank">Explore Content</a>
+            </div>
+            
+            <!-- 页脚 -->
+            <div class="footer">
+                © 2026 Mrs.Andi. All rights reserved.
+            </div>
+        </div>
+    </div>
+</body>
+</html>
