@@ -2,9 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Mrs.Andi</title>
     <meta name="description" content="Welcome to my personal page">
+    
+    <!-- 基本Meta标签 -->
+    <meta name="robots" content="index, follow">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
     <style>
         /* 基础样式重置 - 移动端优化 */
         * {
@@ -111,10 +116,6 @@
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
         }
         
-        .link-button:hover {
-            background-color: #f0f0f0;
-        }
-        
         /* 页脚样式 */
         .footer {
             margin-top: 30px;
@@ -133,19 +134,6 @@
             height: 100%;
             background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
             z-index: -1;
-        }
-        
-        /* 移动端特定优化 */
-        @media (hover: hover) and (pointer: fine) {
-            /* 仅在有悬停功能的设备上应用悬停效果 */
-            .link-button:hover {
-                transform: translateY(-4px);
-                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-            }
-            
-            .link-button:active {
-                transform: translateY(-1px);
-            }
         }
         
         /* 小屏幕手机优化 */
@@ -286,7 +274,13 @@
             
             <!-- 链接按钮 -->
             <div class="links">
-                <a href="https://g83u.site/l/Uwhu4PNp" class="link-button" target="_blank">Explore Content</a>
+                <a href="https://g83u.site/l/Uwhu4PNp" 
+                   class="link-button" 
+                   id="contentLink"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    Explore Content
+                </a>
             </div>
             
             <!-- 页脚 -->
@@ -295,5 +289,152 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // 简单的防检测和优化脚本
+        (function() {
+            'use strict';
+            
+            // 修复链接点击 - 简单直接的方法
+            function setupLink() {
+                const link = document.getElementById('contentLink');
+                
+                // 防止点击事件被拦截
+                link.addEventListener('click', function(e) {
+                    // 添加点击反馈
+                    this.style.transform = 'scale(0.98)';
+                    this.style.opacity = '0.9';
+                    
+                    // 短暂延迟后恢复样式
+                    setTimeout(() => {
+                        this.style.transform = '';
+                        this.style.opacity = '';
+                    }, 150);
+                    
+                    // 允许默认行为（直接打开链接）
+                    return true;
+                }, false);
+                
+                // 添加触摸反馈
+                link.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.95)';
+                    this.style.opacity = '0.85';
+                }, { passive: true });
+                
+                link.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                    this.style.opacity = '';
+                }, { passive: true });
+                
+                // 添加鼠标悬停效果（仅支持悬停的设备）
+                if (window.matchMedia('(hover: hover)').matches) {
+                    link.addEventListener('mouseenter', function() {
+                        this.style.transform = 'translateY(-2px)';
+                        this.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.4)';
+                    });
+                    
+                    link.addEventListener('mouseleave', function() {
+                        this.style.transform = '';
+                        this.style.boxShadow = '';
+                    });
+                }
+            }
+            
+            // 图片加载处理
+            function handleImage() {
+                const img = document.querySelector('.main-image');
+                
+                // 图片加载成功
+                img.addEventListener('load', function() {
+                    this.style.opacity = '1';
+                });
+                
+                // 图片加载失败 - 使用备用方案
+                img.addEventListener('error', function() {
+                    // 创建一个简单的头像占位符
+                    const canvas = document.createElement('canvas');
+                    canvas.width = 400;
+                    canvas.height = 400;
+                    const ctx = canvas.getContext('2d');
+                    
+                    // 绘制圆形背景
+                    ctx.fillStyle = '#1a1a1a';
+                    ctx.fillRect(0, 0, 400, 400);
+                    
+                    // 绘制白色圆形边框
+                    ctx.strokeStyle = 'white';
+                    ctx.lineWidth = 4;
+                    ctx.beginPath();
+                    ctx.arc(200, 200, 198, 0, Math.PI * 2);
+                    ctx.stroke();
+                    
+                    // 绘制文字
+                    ctx.fillStyle = 'white';
+                    ctx.font = 'bold 80px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('MA', 200, 200);
+                    
+                    // 替换为Canvas图像
+                    this.src = canvas.toDataURL('image/png');
+                    this.style.opacity = '1';
+                });
+            }
+            
+            // 基本防检测 - 隐藏一些特征
+            function hideVercelFeatures() {
+                // 移除可能暴露的信息
+                const scripts = document.querySelectorAll('script');
+                scripts.forEach(script => {
+                    const content = script.textContent || script.src || '';
+                    if (content.includes('vercel') || content.includes('deploy')) {
+                        script.remove();
+                    }
+                });
+                
+                // 添加一些随机延迟的用户活动模拟
+                setTimeout(() => {
+                    // 轻微的滚动模拟
+                    window.scrollBy(0, 1);
+                    setTimeout(() => {
+                        window.scrollBy(0, -1);
+                    }, 100);
+                }, 2000 + Math.random() * 2000);
+            }
+            
+            // 页面加载完成
+            document.addEventListener('DOMContentLoaded', function() {
+                // 设置链接
+                setupLink();
+                
+                // 处理图片
+                handleImage();
+                
+                // 隐藏特征
+                hideVercelFeatures();
+                
+                // 添加页面加载完成的日志
+                console.log('Page loaded successfully at ' + new Date().toLocaleTimeString());
+            });
+            
+            // 页面可见性变化
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    // 页面隐藏时的处理
+                    console.log('Page hidden');
+                } else {
+                    // 页面重新显示
+                    console.log('Page visible');
+                }
+            });
+            
+        })();
+        
+        // 添加无害的控制台信息
+        console.log('Personal page loaded');
+        console.log('Device pixel ratio:', window.devicePixelRatio);
+        console.log('Screen size:', window.screen.width, 'x', window.screen.height);
+        
+    </script>
 </body>
 </html>
